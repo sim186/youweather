@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/nuvole" >
+
+    <Button
+        android:id="@+id/credits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="18dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/credits" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageView1"
+        android:background="@color/LightSlateGray"
+        android:text="@string/app_name"
+        android:textSize="30dp" />
+
+    <Button
+        android:id="@+id/check_in"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView1"
+        android:background="@color/LightSlateGray"
+        android:text="@string/check_in" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/media"
+        android:background="@color/LightSlateGray"
+        android:src="@drawable/icon" />
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="91dp"
+        android:text="@string/start"
+        android:textSize="15dp"
+        tools:context=".StartPoint" />
+
+    <EditText
+        android:id="@+id/searchcity"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/welcome"
+        android:layout_alignRight="@+id/searchbutton"
+        android:layout_below="@+id/welcome"
+        android:layout_marginTop="88dp"
+        android:background="@color/LightSlateGray"
+        android:inputType="text"
+        android:paddingLeft="10dp" />
+        
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/searchcity"
+        android:layout_alignLeft="@+id/searchcity"
+        android:layout_marginBottom="56dp"
+        android:text="@string/text_start" />
+
+    <ImageButton
+        android:id="@+id/searchbutton"
+        android:contentDescription="@string/credits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/searchcity"
+        android:layout_alignLeft="@+id/check_in"
+        android:background="@null"
+        android:src="@drawable/ic_action_search" />
+
+</RelativeLayout>

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/22/trunk/YouWeather/res/menu
+END
+activity_city.xml
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/20/trunk/YouWeather/res/menu/activity_city.xml
+END
+activity_check_in.xml
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/10/trunk/YouWeather/res/menu/activity_check_in.xml
+END
+activity_stream.xml
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/22/trunk/YouWeather/res/menu/activity_stream.xml
+END
+activity_start_point.xml
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/5/trunk/YouWeather/res/menu/activity_start_point.xml
+END

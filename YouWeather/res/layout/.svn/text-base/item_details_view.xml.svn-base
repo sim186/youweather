@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+	<ImageView 
+   		android:id="@+id/photo"
+   		android:layout_width="wrap_content"
+   		android:layout_height="wrap_content"
+   		android:contentDescription="@string/media"
+		android:paddingRight="15dp"
+		android:paddingTop="10dp" />
+
+	<TextView android:id="@+id/namecity"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_toRightOf="@id/photo"
+	    android:textColor="@color/Red"
+	    android:textSize="14sp"
+	    android:textStyle="bold" />
+
+		
+	<TextView android:id="@+id/nameuser" 
+		android:textSize="19sp" 
+		android:textStyle="bold" 
+		android:textColor="#32cd32" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_below="@id/namecity"
+		android:layout_toRightOf="@id/photo" />
+	
+	<TextView android:id="@+id/temperature"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@id/nameuser"
+	    android:layout_toRightOf="@id/photo"
+	    android:textColor="#FFFF00"
+	    android:textSize="13sp"
+	    android:textStyle="bold" />
+	
+	<TextView android:id="@+id/description"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_below="@id/temperature"
+		android:layout_toRightOf="@id/photo" />
+
+</RelativeLayout>

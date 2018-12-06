@@ -1,0 +1,204 @@
+package com.youweather.sgg;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
+
+/**
+ * L'activity Stream si occupa di mostrare in una listview i checkin relativi ad una città 
+ * inserita dall'utente. Comunica con il database tramite degli script PHP.
+ */
+
+public class Stream extends Activity {
+	 
+	//Stringa che conterrà il valore passatogli da city
+	String localita;
+	
+	// Progress Dialog
+	private ProgressDialog pDialog;
+	
+	// Creazione dell'oggetto JSONParser per il passaggio dei dati dall'activity al database remoto
+    JSONParser jParser = new JSONParser();
+    
+    // URL contenente l'indirizzo del file php per la gestione della classe nel database remoto
+ 	private static String url_all_checkin = "http://ip/android_connect/get_all_checkin.php";
+ 	
+    // Nodi JSON    
+ 	private static final String TAG_SUCCESS = "success";
+ 	private static final String TAG_CHECKIN = "checkin";
+ 	private static final String TAG_NAME = "nome";
+ 	private static final String TAG_LOCATION = "localita";
+ 	private static final String TAG_TEMPERATURE = "temperatura";
+ 	private static final String TAG_CONDITIONS = "condizioni";
+	
+	// JSONArray che conterrà tutti gli oggetti JSON raccolti dal database
+	JSONArray checkin = null;
+	
+	//ArrayList per la gestione della ListView
+    ArrayList<ItemDetails> image_details = null;
+	ArrayList<ItemDetails> results = new ArrayList<ItemDetails>();
+	ListView lv1;
+	int success; //variabile di controllo per le query che hanno restituito almeno una riga
+
+	
+ 	@Override
+    public void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_stream);
+                
+        // Raccogli il nome della città passatogli da StartPoint
+        localita = getIntent().getExtras().getString("citta");
+        
+        // Caricamento dei checkin in un Thread lanciato in background
+     	new LoadAllCheckin().execute();
+     	
+     	// Link tra la list view dell'interfaccia e l'oggetto di classe
+		lv1 = (ListView) findViewById(R.id.listV_main);
+        
+        // Listener che mostra un toast contente la città dell'elemento premuto
+        lv1.setOnItemClickListener(new OnItemClickListener() {
+        	
+        	public void onItemClick(AdapterView<?> a, View v, int position, long id) { 
+        		Object o = lv1.getItemAtPosition(position);
+            	ItemDetails obj_itemDetails = (ItemDetails)o;
+        		Toast.makeText(Stream.this, "Hai selezionato : " + " " + obj_itemDetails.getCity(), Toast.LENGTH_LONG).show();
+        	}  
+        });
+    }
+ 	
+ 	
+ 	/**
+ 	  * Il metodo si occupa di riempire la listview (quindi l'arraylist) con gli elementi raccolti dalla tabella checkin
+ 	  */ 
+ 	private ArrayList<ItemDetails> GetSearchResults(JSONArray checkin){
+ 		JSONObject c;
+ 		int temp,img = 0;
+ 		String temperature;
+
+ 		for (int i = 0; i < checkin.length(); i++) {
+
+ 			try {
+ 				c = checkin.getJSONObject(i);
+
+ 				// Salvataggio di ciascun oggetto json all'interno di item_details
+ 				ItemDetails item_details = new ItemDetails();
+ 				item_details.setUser(c.getString(TAG_NAME));
+ 				item_details.setCity(c.getString(TAG_LOCATION));
+ 				item_details.setConditions(c.getString(TAG_CONDITIONS));
+ 				
+ 				temperature = c.getString(TAG_TEMPERATURE);
+ 				item_details.setTemperature(temperature);
+ 				temp = Integer.parseInt(temperature); //Conversione della temperatura in intero per settare l'icona
+ 				if (temp < 4)  img= 3 ;
+ 				if (temp >=4 && temp <10) img= 5;
+ 				if (temp >=10 && temp<15 ) img=2;
+ 				if (temp >= 15 && temp < 20 ) img=1;
+ 				if (temp >= 20)img= 4;
+ 				item_details.setImageNumber(img);
+ 				results.add(item_details); //aggiunge l'itemdetails creato all'arraylist
+
+ 			} catch (JSONException e) {
+ 				e.printStackTrace();
+ 			}
+
+ 		}
+
+ 		return results;
+
+ 	}
+
+ 	    @Override
+ 	    public boolean onCreateOptionsMenu(Menu menu) {
+ 	        getMenuInflater().inflate(R.menu.activity_stream, menu);
+ 	        return true;
+ 	    }
+ 	    
+
+ /**
+  * Task Asincrono lanciato in background per caricare tutti i checkin facendo una richiesta HTTP
+ */	
+ class LoadAllCheckin extends AsyncTask<String, String, String> {
+
+		/**
+		 * Azione da eseguire prima di lanciare il processo principale, ovvero,
+		 * mostra una dialog di caricamento
+		 * 
+		 * */
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialog = new ProgressDialog(Stream.this);
+			pDialog.setMessage("Caricamento in corso...Attendere");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
+		}
+
+		/**
+		 * Metodo principale che si occupa di effetturare la richiesta http e salvare tutti i dati restituitigli dall'oggetto JSON
+        * */
+		protected String doInBackground(String... args) {
+			
+			// Passiamo il parametro città nella chiamata HTTP che filtrerà la query in base alla città passata
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("localita", localita));
+			// Richiesta HTTP di tipo GET poichè il parametro è solo uno
+			JSONObject json = jParser.makeHttpRequest(url_all_checkin, "GET", params);
+			
+			try {
+				// Controlliamo se la query è andata a buon fine
+				success = json.getInt(TAG_SUCCESS);
+
+				if (success == 1) {
+					// Check In trovato
+					// Creiamo un array di checkin
+					checkin = json.getJSONArray(TAG_CHECKIN);
+
+					//Riempiamo in modo apportuno l'ArrayList con i dati raccolti
+					image_details = GetSearchResults(checkin);	    					
+				} else {
+					
+					// Nel caso in cui non sia stato trovato nessun checkin
+					// Viene lanciata l'activity per l'inserimento di un checkin
+					Intent i = new Intent(getApplicationContext(),CheckIn.class);
+					// Chiudiamo le activity precedenti
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					finish();
+					startActivity(i);
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		/**
+		 * Metodo finale che alla fine del processo di background rimuove la dialog ed imposta l'adapter per la listview
+		 * **/
+		protected void onPostExecute(String file_url) {
+			// Rimuove la dialog
+			pDialog.dismiss();
+			// Imposta l'adapter per la list view con i dati raccolti solo se abbiamo trovato un checkin valido
+			if(success == 1)
+	        lv1.setAdapter(new ItemListBaseAdapter(getApplicationContext(), image_details));
+		}
+    }
+ 
+}

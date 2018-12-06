@@ -1,0 +1,22 @@
+<resources>
+
+    <string name="app_name">YouWeather</string>
+    <string name="start">"YouWheater. \nRaccontaci il tempo che fa"</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_start_point">YouWeather</string>
+    <string name="credits">Credits</string>
+    <string name="check_in">CHECK IN</string>
+    <string name="media">image</string>
+    <string name="text_start">Dove vuoi andare ?</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_check_in">CheckIn</string>
+    <string name="nome_checkin">Il tuo Nome*</string>
+    <string name="localita">Località*</string>
+    <string name="temperatura">Temperatura (in °)</string>
+    <string name="condizioni">Condizioni*</string>
+    <string name="upload_button">Upload</string>
+    <string name="title_activity_show_post">ShowPost</string>
+    <string name="title_activity_city">City</string>
+    <string name="title_activity_stream">Stream</string>
+
+</resources>

@@ -1,0 +1,13 @@
+Abano Terme;PD;VEN
+Abbadia Cerreto;LO;LOM
+Abbadia Lariana;LC;LOM
+Abbadia San Salvatore;SI;TOS
+Abbasanta;OR;SAR
+Abbateggio;PE;ABR
+Abbiategrasso;MI;LOM
+Abetone;PT;TOS
+Abriola;PZ;BAS
+Acate;RG;SIC
+Accadia;FG;PUG
+Acceglio;CN;PIE
+Accettura;MT;BAS

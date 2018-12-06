@@ -1,0 +1,40 @@
+10
+
+dir
+64
+https://youweather.googlecode.com/svn/trunk/YouWeather/bin/res
+https://youweather.googlecode.com/svn
+
+
+
+2012-10-13T08:24:27.685447Z
+16
+sim1celestino@gmail.com
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+c24e3b78-ebe7-2f9f-3886-46ed026dff7a
+
+drawable-hdpi
+dir
+
+drawable-ldpi
+dir
+
+drawable-mdpi
+dir
+
+drawable-xhdpi
+dir
+
